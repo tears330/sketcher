@@ -4,7 +4,7 @@
   "description": "A simple cli for sketch your resumeer",
   "main": "index.js",
   "bin": {
-    "sketch": "./bin/index.js"
+    "sketch": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
