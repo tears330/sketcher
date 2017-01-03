@@ -6,7 +6,7 @@ const toHtml = require('./convert/toHtml');
 const init = require('./command/init');
 
 var argv = yargs
-    .usage('Usage: resumer -c resume.json -t basic')
+    .usage('Usage: sketch -c resume.json -t basic')
     .command('init', 'Init your resume.json file', (yargs) => {
         init();
     })
