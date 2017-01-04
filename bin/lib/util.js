@@ -6,7 +6,7 @@ const Util = {
     getFile: (filePath) => {
         return new Promise((resolve, reject) => {
             fs.readFile(filePath, 'utf-8', (err, data) => {
-                (!err && data) ? resolve(data) : reject(err);
+                (!err && data) ? resolve(data): reject(err);
             });
         });
     },
@@ -28,7 +28,20 @@ const Util = {
                 resolve(answer);
             });
         });
+    },
+    isExist: (path) => {
+        return new Promise((resolve, reject) => {
+            fs.stat(path, function (err, stat) {
+                stat && stat.isFile() ? resolve(true) : resolve(false);
+            });
+        });
+    },
+    bundleHtml: (html, type, content) => {
+        type === 'css' && (html = html.replace('</head>', `<style>${content}</style></head>`));
+        type === 'js' && (html = html.replace('</body>', `<script>${content}</script></body>`));
+
+        return html;
     }
 }
 
-module.exports = Util; 
+module.exports = Util;

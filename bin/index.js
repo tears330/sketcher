@@ -6,7 +6,7 @@ const toHtml = require('./convert/toHtml');
 const init = require('./command/init');
 
 var argv = yargs
-    .usage('Usage: sketch -c resume.json -t basic')
+    .usage('Usage: sketch <command> [options]')
     .command('init', 'Init your resume.json file', (yargs) => {
         init();
     })
@@ -28,6 +28,9 @@ var argv = yargs
     })
     .help('h')
     .alias('h', 'help')
+    .epilog('吊的不行')
+    .example('sketch init', 'Init a resume.json in current dic')
+    .example('sketch -c resume.json -t basic', 'Use basic theme to build your resume.html')
     .argv;
 
 // console.log(argv)
