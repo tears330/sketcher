@@ -1,6 +1,8 @@
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
+const less = require('less');
+const minify = require('html-minifier').minify;
 
 const Util = {
     getFile: (filePath) => {
@@ -40,7 +42,28 @@ const Util = {
         type === 'css' && (html = html.replace('</head>', `<style>${content}</style></head>`));
         type === 'js' && (html = html.replace('</body>', `<script>${content}</script></body>`));
 
+        if (type === 'less') {
+            less.render(content, (err, css) => {
+
+                if (err) {
+                    console.log(err);
+                    return;
+                } else {
+                    html = html.replace('</head>', `<style>${css.css}</style></head>`);
+                    return html;
+                }
+            })
+        }
+
         return html;
+    },
+    htmlMin: (htmlStr) => {
+        return minify(htmlStr, {
+            removeAttributeQuotes: true,
+            minifyCSS: true,
+            collapseWhitespace: true,
+            removeComments: true
+        });
     }
 }
 

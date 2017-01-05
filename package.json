@@ -12,12 +12,14 @@
   "author": "Zz",
   "license": "MIT",
   "repository": {
-		"type": "git",
-		"url": "https://github.com/tears330/sketcher"
-	},
+    "type": "git",
+    "url": "https://github.com/tears330/sketcher"
+  },
   "dependencies": {
+    "html-minifier": "^3.2.3",
+    "juicer": "^0.6.14",
+    "less": "^2.7.2",
     "shelljs": "^0.7.5",
-    "yargs": "^6.5.0",
-    "juicer": "^0.6.14"
+    "yargs": "^6.5.0"
   }
 }
