@@ -1,6 +1,152 @@
+// iconfont图标库
+@import "http://at.alicdn.com/t/font_m7xwmkldowa2x1or.css";
+
+// 全局样式、变量
+@phoneSize: 468px;
+@middleScreenSzie: 992px;
+
+.block {
+    background: #fff;
+    border-radius: 3px;
+}
+
+.content {
+    border-top: 1px solid #e6e6e6;
+    padding: 10px 0;
+}
+
+.clear-margin {
+    margin: 0;
+}
+
+.icon-small {
+    font-size: 12px;
+}
+
+
+// 简历样式
 body {
-    background: #333;
-    h1 {
-        color: lightgray;
+    background: #f0f0f0;
+    color: #333;
+    .main {
+        padding: 5px;
+        .profile-wrapper {
+            font-size: 0.8em;
+            padding: 5px;
+            text-align: center;
+            @media (max-width: @middleScreenSzie) {
+                position: relative;
+            }
+            .card {
+                .block();
+            }
+            .profile-img {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+                span {
+                    font-size: 14px;
+                    font-weight: 500;
+	                line-height: 1.1;
+                }
+            }
+            .profile {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                .details {
+                    padding: 10px;
+                    a {
+                        color: #333;
+                    }
+                }
+            }
+            .github {
+                padding: 15px;
+                a {
+                    font-size: 20px;
+                    color: #333;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+        .background-wrapper {
+            padding: 5px;
+            border-radius: 5px;
+            hr {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                border: 0;
+                border-top: 1px solid #eee;
+            }
+            .card {
+                .block();
+                padding: 10px 20px;
+            }
+            .details {
+                display: table;
+                @media (max-width: @phoneSize) {
+                    display: block;
+                }
+                .icon, .info {
+                    display: table-cell;
+                    padding: 0 10px;
+                    @media (max-width: @phoneSize) {
+                        display: block;
+                        padding: 5px 0;
+                    }
+                }
+                .icon {
+                    h4 {
+                        display: none;
+                        @media (max-width: @phoneSize) {
+                            display: inline-block;
+                            margin-left: 15px;
+                        }
+                    }
+                }
+                .info {
+                    width: 100%;
+                    h4 {
+                        display: block;
+                        @media (max-width: @phoneSize) {
+                            display: none;
+                        }
+                    }
+                    .content {
+                        .content();
+                        ul {
+                            margin-top: 10px;
+                            @media (max-width: @phoneSize) {
+                                padding-left: 25px;
+                            }
+                        }
+                        .skill-content,.interest-content {
+                            strong {
+                                display: block;
+                                margin-bottom: 8px;
+                            }
+                            .labels {
+                                margin-left: 30px;
+                                margin-bottom: 10px;
+                                @media (max-width: @phoneSize) {
+                                    margin-left: 0;
+                                }
+                                span {
+                                    display: inline-block;
+                                    padding: 2px 5px;
+                                    margin-right: 8px;
+                                    border-bottom: 2px solid #333;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

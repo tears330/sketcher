@@ -1,0 +1,93 @@
+{
+    "basics": {
+        "name": "Zz",
+        "label": "Programmer",
+        "pictureUrl": "http://ww1.sinaimg.cn/large/73797f53gw1f8ou875kqmj20gv0gvabl.jpg",
+        "email": "example@gmail.com",
+        "phone": "+86 13855558888",
+        "website": "http://zzfe.top/stetcher",
+        "summary": "这里是简介",
+        "location": "杭州，浙江",
+        "profiles": [{
+            "network": "Github",
+            "url": "https://github.com/tears330"
+        }]
+    },
+    "backGround": {
+        "about": "A poor man.",
+        "workExperience": [{
+            "company": "YaoziShiye",
+            "position": "Front Engineer",
+            "Date": {
+                "startDate": "2016-05-03",
+                "endDate": "2016-11-03"
+            },
+            "summary": "Todo Something.",
+            "highlight": [
+                "BlaBlaBlaBla",
+                "BlaBlaBlaBla"
+            ]
+        }, {
+            "company": "YaoziShiye",
+            "position": "Front Engineer",
+            "Date": {
+                "startDate": "2016-05-03",
+                "endDate": "2016-11-03"
+            },
+            "summary": "Todo Something.",
+            "highlight": [
+                "BlaBlaBlaBla",
+                "BlaBlaBlaBla"
+            ]
+        }],
+        "skills": [{
+            "name": "Front End",
+            "keywords": [
+                "React",
+                "ECMAScript6",
+                "Vue",
+                "React Native"
+            ]
+        }, {
+            "name": "Back End",
+            "keywords": [
+                "J2EE",
+                "Spring",
+                "Hibernate"
+            ]
+        }],
+        "education": [{
+            "name": "Northeast Petroleum University",
+            "location": "HeiLongjiang Daqing",
+            "major": "Computer Science",
+            "Date": {
+                "startDate": "2016-05-03",
+                "endDate": "2016-11-03"
+            }
+        }, {
+            "name": "Northeast Petroleum University",
+            "location": "HeiLongjiang Daqing",
+            "major": "Computer Science",
+            "Date": {
+                "startDate": "2016-05-03",
+                "endDate": "2016-11-03"
+            }
+        }],
+        "interests": [{
+            "type": "Music",
+            "keywords": [
+                "LiZhi",
+                "Brit-Pop",
+                "Folk",
+                "Suede",
+                "Oasis"
+            ]
+        }, {
+            "type": "Sports",
+            "keywords": [
+                "PIAPIAPIA",
+                "FSK"
+            ]
+        }]
+    }
+}

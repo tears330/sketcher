@@ -1,17 +1,185 @@
 <html>
-    <head>
-        <title>简历</title>
-    </head>
-    <body>
-        <h1>${basics.name}</h1>
-        <div>
-            <h2>个人信息</h2>
-            <ul>
-                <li>label:${basics.label}</li>
-                <li>Email:${basics.email}</li>
-                <li>Phone:${basics.phone}</li>
-                <li>WebSite:${basics.website}</li>
-            </ul>
+
+<head>
+    <title>${basics.name}</title>
+    <!--bootstarp资源-->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row main">
+            <section class="col-md-3 col-xs-12 profile-wrapper affix">
+                <div class="card">
+                    <div class="profile-img">
+                        <img src="${basics.pictureUrl}" alt="" class="img-circle">
+                        <h2>${basics.name}</h2>
+                        <span class="text-muted">${basics.label}</span>
+                    </div>
+                    <div class="profile clearfix">
+                        {@if basics.location}
+                        <div class="details col-xs-12 col-sm-3 col-md-12">
+                            <i class="iconfont icon-map"></i>
+                            <span>${basics.location}</span>
+                        </div>
+                        {@/if}
+                        {@if basics.phone}
+                        <div class="details col-xs-12 col-sm-3 col-md-12">
+                            <i class="iconfont icon-phone"></i>
+                            <span>${basics.phone}</span>
+                        </div>
+                        {@/if}
+                        {@if basics.email}
+                        <div class="details col-xs-12 col-sm-3 col-md-12">
+                            <i class="iconfont icon-email"></i>
+                            <span>${basics.email}</span>
+                        </div>
+                        {@/if}
+                        {@if basics.website}
+                        <div class="details col-xs-12 col-sm-3 col-md-12">
+                            <i class="iconfont icon-link"></i>
+                            <a href="${basics.website}">${basics.website}</a>
+                        </div>
+                        {@/if}
+                    </div>
+                    {@if basics.profiles}
+                    <div class="github">
+                        <a href="${basics.profiles[0].url}" class="iconfont icon-github"></a>
+                    </div>
+                    {@/if}
+                </div>
+            </section>
+            <section class="col-md-9 col-xs-12 background-wrapper pull-right">
+                <div class="card">
+                    <h3>BackGround</h3>
+                    <hr>
+                    <div class="background-details">
+                        {@if backGround.about}
+                        <div class="details about">
+                            <div class="icon">
+                                <i class="iconfont icon-bussinesscard"></i>
+                                <h4>ABOUT</h4>
+                            </div>
+                            <div class="info">
+                                <h4>ABOUT</h4>
+                                <div class="content">
+                                    <p>${backGround.about}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {@/if}
+                        {@if backGround.workExperience}
+                        <div class="details work-experience">
+                            <div class="icon">
+                                <i class="iconfont icon-pin"></i>
+                                <h4>WORK EXPERIENCE</h4>
+                            </div>
+                            <div class="info">
+                                <h4>WORK EXPERIENCE</h4>
+                                <ul class="list-unstyled clear-margin">
+                                    {@each backGround.workExperience as item}
+                                    <li class="content">
+                                        <p>
+                                            <strong>${item.position},</strong> ${item.company}
+                                        </p>
+                                        <p class="text-muted">
+                                            <small>${item.Date|formatDate}</small>
+                                            <small>
+                                                <i class="iconfont icon-time1 icon-small"></i>
+                                                ${item.Date|subDate}
+                                            </small>
+                                        </p>
+                                        <span>${item.summary}</span>
+                                        <ul>
+                                            {@each item.highlight as content}
+                                            <li>content</li>
+                                            {@/each}
+                                        </ul>
+                                    </li>
+                                    {@/each}
+                                </ul>
+                            </div>
+                        </div>
+                        {@/if}
+                        {@if backGround.skills}
+                        <div class="details skills">
+                            <div class="icon">
+                                <i class="iconfont icon-process"></i>
+                                <h4>SKILLS</h4>
+                            </div>
+                            <div class="info">
+                                <h4>SKILLS</h4>
+                                <ul class="list-unstyled clear-margin">
+                                    {@each backGround.skills as item}
+                                    <li class="content">
+                                        <div class="skill-content">
+                                            <strong>${item.name}</strong>
+                                            <div class="labels">
+                                                {@each item.keywords as content}
+                                                <span>${content}</span>
+                                                {@/each}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {@/each}
+                                </ul>
+                            </div>
+                        </div>
+                        {@/if}
+                        {@if backGround.education}
+                        <div class="details education">
+                            <div class="icon">
+                                <i class="iconfont icon-education"></i>
+                                <h4>EDUCATION</h4>
+                            </div>
+                            <div class="info">
+                                <h4>EDUCATION</h4>
+                                <ul class="list-unstyled clear-margin">
+                                    {@each backGround.education as item}
+                                    <li class="content">
+                                        <p class="clear-margin">
+                                            <strong>${item.location},${item.major}</strong>
+                                            | ${item.name}
+                                        </p>
+                                        <p class="text-muted clear-margin">
+                                            ${item.Date|formatDate}
+                                        </p>
+                                    </li>
+                                    {@/each}
+                                </ul>
+                            </div>
+                        </div>
+                        {@/if}
+                        {@if backGround.interests}
+                        <div class="details interests">
+                            <div class="icon">
+                                <i class="iconfont icon-like"></i>
+                                <h4>INTERESTS</h4>
+                            </div>
+                            <div class="info">
+                                <h4>INTERESTS</h4>
+                                <ul class="list-unstyled clear-margin">
+                                    {@each backGround.interests as item}
+                                    <li class="content">
+                                        <div class="interest-content">
+                                            <strong>${item.type}</strong>
+                                            <div class="labels">
+                                                {@each item.keywords as content}
+                                                <span>${content}</span>                                              
+                                                {@/each}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {@/each}
+                                </ul>
+                            </div>
+                        </div>
+                        {@/if}
+                    </div>
+                </div>
+            </section>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

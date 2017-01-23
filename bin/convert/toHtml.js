@@ -1,7 +1,10 @@
-const jucier = require('juicer');
+const juicer = require('juicer');
 const path = require('path');
 
 const util = require('../lib/util');
+
+juicer.register('formatDate', util.formatDate);
+juicer.register('subDate', util.subDate);
 
 const toHtml = (jsonPath, theme) => {
     var modelPath = path.join(__dirname, '..', 'views', theme, 'model.html'),
@@ -12,7 +15,7 @@ const toHtml = (jsonPath, theme) => {
     Promise.all([util.getFile(jsonPath), util.getFile(modelPath)]).then((success) => {
         var data = JSON.parse(success[0]),
             tpl = success[1],
-            htmlStr = jucier(tpl, data);
+            htmlStr = juicer(tpl, data);
 
         util.getFile(lessPath)
             //  判断主题路径下是否存在对应静态资源，存在则进行打包

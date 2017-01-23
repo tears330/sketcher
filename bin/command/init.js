@@ -3,33 +3,7 @@ const readline = require('readline');
 
 const util = require('../lib/util');
 
-var json = {
-    "basics": {
-        "name": "Zz",
-        "label": "Programmer",
-        "picture": "",
-        "email": "tears330@gmail.com",
-        "phone": "(912) 555-4321",
-        "website": "http://richardhendricks.com",
-        "summary": "这里是简介",
-        "location": {
-            "address": "2712 Broadway St",
-            "postalCode": "CA 94115",
-            "city": "San Francisco",
-            "countryCode": "US",
-            "region": "California"
-        },
-        "profiles": [{
-            "network": "Twitter",
-            "username": "neutralthoughts",
-            "url": ""
-        }, {
-            "network": "SoundCloud",
-            "username": "dandymusicnl",
-            "url": "https://soundcloud.com/dandymusicnl"
-        }]
-    }
-};
+var json = require('../lib/resume');
 
 const init = () => {
     util.questionSync('Name:')
