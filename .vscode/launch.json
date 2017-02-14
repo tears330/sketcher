@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/bin/index.js",
             "stopOnEntry": false,
-            "args": ["-c", "resume.json", "-t", "basic"],
+            "args": ["-p", "resume.json"],
             "cwd": "/Users/Zz/Documents/",
             "preLaunchTask": null,
             "runtimeExecutable": null,

@@ -45,15 +45,13 @@ const Util = {
 
         if (type === 'less') {
             less.render(content, (err, css) => {
-
                 if (err) {
-                    console.log(err);
-                    return;
+                    return console.log(err);
                 } else {
                     html = html.replace('</head>', `<style>${css.css}</style></head>`);
                     return html;
                 }
-            })
+            });
         }
 
         return html;

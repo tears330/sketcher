@@ -3,6 +3,7 @@
 const yargs = require('yargs');
 
 const toHtml = require('./convert/toHtml');
+const toPdf = require('./convert/toPdf');
 const init = require('./command/init');
 
 var argv = yargs
@@ -36,6 +37,14 @@ var argv = yargs
 // console.log(argv)
 
 argv.c && toHtml(process.cwd() + '/' + argv.c, argv.t);
+
+if (argv.p) {
+    var pdf = new toPdf(process.cwd() + '/' + argv.p, argv.t);
+    pdf.exec((err, data) => {
+        err && console.log(err);
+        data && console.log(data);
+    });
+}
 
 // // 默认展示帮助信息
 (process.argv.length === 2) && yargs.showHelp();

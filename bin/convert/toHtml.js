@@ -6,46 +6,51 @@ const util = require('../lib/util');
 juicer.register('formatDate', util.formatDate);
 juicer.register('subDate', util.subDate);
 
-const toHtml = (jsonPath, theme) => {
+const toHtml = (jsonPath, theme, useString) => {
     var modelPath = path.join(__dirname, '..', 'views', theme, 'model.html'),
         cssPath = path.join(modelPath, '..', 'main.css'),
         jsPath = path.join(modelPath, '..', 'main.js'),
         lessPath = path.join(modelPath, '..', 'main.less');
 
-    Promise.all([util.getFile(jsonPath), util.getFile(modelPath)]).then((success) => {
-        var data = JSON.parse(success[0]),
-            tpl = success[1],
+    function* gen() {
+        var data = JSON.parse(yield util.getFile(jsonPath)),
+            tpl = yield util.getFile(modelPath),
+            lessStr = yield util.getFile(lessPath),
+            cssStr = yield util.getFile(cssPath),
+            jsStr = yield util.getFile(jsPath),
             htmlStr = juicer(tpl, data);
 
-        util.getFile(lessPath)
-            //  判断主题路径下是否存在对应静态资源，存在则进行打包
+        if (typeof lessStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'less', lessStr);
+        if (typeof cssStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'css', cssStr);
+        if (typeof jsStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'js', jsStr);
+        htmlStr = util.htmlMin(htmlStr);
+
+        if (useString) return htmlStr;
+
+        util.writeFile('/index.html', htmlStr)
             .then((data) => {
-                htmlStr = util.bundleHtml(htmlStr, 'less', data);
-                return util.getFile(cssPath);
-            }, (err) => {
-                return util.getFile(cssPath);
-            })
-            .then((data) => {
-                htmlStr = util.bundleHtml(htmlStr, 'css', data);
-                return util.getFile(jsPath);
-            }, (err) => {
-                return util.getFile(jsPath);
-            })
-            .then((data) => {
-                htmlStr = util.bundleHtml(htmlStr, 'js', data);
-                return util.writeFile('/index.html', util.htmlMin(htmlStr));
-            }, (err) => {
-                return util.writeFile('/index.html', util.htmlMin(htmlStr));
-            })
-            .then((success) => {
-                console.log('Checkout your index.html :)');
+                console.log('Checkout your index.html! :)');
             }, (err) => {
                 console.log(err);
             });
+    }
 
-    }, (failed) => {
-        console.log(failed);
-    });
+    function run(gen) {
+        var g = gen();
+
+        function next(data) {
+            var result = g.next(data);
+            if (result.done) return 'result.value';
+            result.value.then((data) => {
+                next(data);
+            });
+        }
+
+        next();
+    }
+
+    return run(gen);
+
 };
 
 
