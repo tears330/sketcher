@@ -3,13 +3,9 @@ const path = require('path');
 const childprocess = require('child_process');
 
 const util = require('../lib/util');
-const toHtml = require('./toHtml');
 
 class toPdf {
-    constructor(jsonPath, theme) {
-        
-        var htmlStr = toHtml(jsonPath, theme, true);
-
+    constructor(htmlStr, fileName) {
         var options = {
                 viewPortSize: {
                     width: 768,
@@ -20,7 +16,7 @@ class toPdf {
                     orientation: 'portrait',
                     margin: '0px'
                 },
-                fileName: '/index.pdf'
+                fileName: path.resolve(fileName)
             };
 
         this.res = { htmlStr, options };
@@ -28,7 +24,7 @@ class toPdf {
 
     exec(callback) {
 
-        var child = childprocess.spawn('phantomjs', [path.join(__dirname, '..', 'lib', 'pdf.js')]),
+        var child = childprocess.spawn(phantomjs.path, [path.join(__dirname, '..', 'lib', 'pdf.js')]),
             stdout = [],
             stderr = [];
 
@@ -52,17 +48,19 @@ class toPdf {
         });
 
         child.on('exit', (code) => {
+
             if (code || stderr.length) {
                 var err = new Error(Buffer.concat(stderr).toString() || 'pdf: Unknown Error');
                 return exitHandler(err);
             } else {
                 var buffer = Buffer.concat(stdout).toString(),
                     data = (buffer != null) ? buffer.trim() : undefined;
-                return exitHandler(null, JSON.parse(data));
+                return exitHandler(null, data);
             }
         });
-
-        child.stdin.write(JSON.stringify(this.res), 'utf8');
+        
+        return child.stdin.write(JSON.stringify(this.res) + '\n', 'utf8')
+        // child.stdin.write(JSON.stringify(this.res), 'utf8');
     }
 };
 

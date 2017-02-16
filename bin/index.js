@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const yargs = require('yargs');
+const co = require('co');
 
 const toHtml = require('./convert/toHtml');
 const toPdf = require('./convert/toPdf');
@@ -36,14 +37,20 @@ var argv = yargs
 
 // console.log(argv)
 
-argv.c && toHtml(process.cwd() + '/' + argv.c, argv.t);
+// argv.c && toHtml(process.cwd() + '/' + argv.c, argv.t);
+if (argv.c) {
+    co(toHtml(process.cwd() + '/' + argv.c, argv.t, false));
+}
 
 if (argv.p) {
-    var pdf = new toPdf(process.cwd() + '/' + argv.p, argv.t);
-    pdf.exec((err, data) => {
-        err && console.log(err);
-        data && console.log(data);
-    });
+    co(toHtml(process.cwd() + '/' + argv.p, argv.t, true))
+        .then((res) => {
+            var pdf = new toPdf(res, 'index.pdf');
+            pdf.exec((err, data) => {
+                if (err) return console.log(err);
+                console.log(data);
+            });
+        });
 }
 
 // // 默认展示帮助信息

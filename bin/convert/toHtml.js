@@ -13,16 +13,31 @@ const toHtml = (jsonPath, theme, useString) => {
         lessPath = path.join(modelPath, '..', 'main.less');
 
     function* gen() {
-        var data = JSON.parse(yield util.getFile(jsonPath)),
+        var data = JSON.parse(yield util.getFile(jsonPath));
             tpl = yield util.getFile(modelPath),
-            lessStr = yield util.getFile(lessPath),
-            cssStr = yield util.getFile(cssPath),
-            jsStr = yield util.getFile(jsPath),
             htmlStr = juicer(tpl, data);
 
-        if (typeof lessStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'less', lessStr);
-        if (typeof cssStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'css', cssStr);
-        if (typeof jsStr !== "string") htmlStr = util.bundleHtml(htmlStr, 'js', jsStr);
+        try {
+            var lessStr = yield util.getFile(lessPath);
+        } catch(err) {
+            var lessStr = new Error("no file");
+        }
+
+        try {
+            var cssStr = yield util.getFile(cssPath);
+        } catch(err) {
+            var cssStr = new Error("no file");
+        }
+
+        try {
+            var jsStr = yield util.getFile(jsPath);
+        } catch(err) {
+            var jsStr = new Error("no file");
+        }
+
+        if (typeof lessStr === "string") htmlStr = util.bundleHtml(htmlStr, 'less', lessStr);
+        if (typeof cssStr === "string") htmlStr = util.bundleHtml(htmlStr, 'css', cssStr);
+        if (typeof jsStr === "string") htmlStr = util.bundleHtml(htmlStr, 'js', jsStr);
         htmlStr = util.htmlMin(htmlStr);
 
         if (useString) return htmlStr;
@@ -35,22 +50,23 @@ const toHtml = (jsonPath, theme, useString) => {
             });
     }
 
-    function run(gen) {
-        var g = gen();
+    // function run(gen) {
+    //     var g = gen();
 
-        function next(data) {
-            var result = g.next(data);
-            if (result.done) return 'result.value';
-            result.value.then((data) => {
-                next(data);
-            });
-        }
+    //     function next(data) {
+    //         var result = g.next(data);
+    //         if (result.done) return result.value;
+    //         result.value.then((data) => {
+    //             next(data);       
+    //         }, (data) => {
+    //             next(data);
+    //         });
+    //     }
 
-        next();
-    }
+    //     next();
+    // }
 
-    return run(gen);
-
+    return gen;
 };
 
 
