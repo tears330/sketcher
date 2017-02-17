@@ -14,7 +14,7 @@ class toPdf {
                 paperSize: {
                     format: 'A4',
                     orientation: 'portrait',
-                    margin: '0px'
+                    margin: '10mm'
                 },
                 fileName: path.resolve(fileName)
             };
@@ -48,7 +48,6 @@ class toPdf {
         });
 
         child.on('exit', (code) => {
-
             if (code || stderr.length) {
                 var err = new Error(Buffer.concat(stderr).toString() || 'pdf: Unknown Error');
                 return exitHandler(err);
